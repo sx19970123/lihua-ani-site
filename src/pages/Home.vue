@@ -118,14 +118,14 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <!-- 蒙版：径向遮罩（不加 backdrop-blur 以保证性能），中央半透保证文字可读，边缘融入背景 -->
+    <!-- 蒙版：径向遮罩，中央半透保证文字可读，边缘融入背景。
+         用 dark: 变体显式声明亮/暗颜色，不依赖 color-mix()（部分移动端不支持） -->
     <div
-      class="pointer-events-none absolute inset-0"
-      style="background: radial-gradient(ellipse 70% 60% at center, color-mix(in oklab, var(--bg) 55%, transparent) 0%, color-mix(in oklab, var(--bg) 92%, transparent) 100%)"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_center,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.92)_100%)] dark:bg-[radial-gradient(ellipse_70%_60%_at_center,rgba(36,38,40,0.55)_0%,rgba(36,38,40,0.92)_100%)]"
     />
-    <!-- 上下渐隐：用页面底色 var(--bg)（亮色白/暗色深灰，自动随主题切换） -->
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--bg)] to-transparent" />
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--bg)] to-transparent" />
+    <!-- 上下渐隐：显式亮/暗颜色 -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white to-transparent dark:from-[#242628]" />
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent dark:from-[#242628]" />
 
     <!-- 前景：标题 + 下载 -->
     <div class="container-page relative z-10 flex w-full flex-col items-center text-center">
