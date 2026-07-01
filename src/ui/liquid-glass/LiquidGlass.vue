@@ -203,10 +203,8 @@ onUnmounted(() => {
   opacity: 1;
   border-radius: inherit;
   backdrop-filter: url(#displacementFilter);
-  background: light-dark(
-    hsl(0 0% 100% / var(--frost, 0)),
-    hsl(0 0% 0% / var(--frost, 0))
-  );
+  /* 用项目主题色变量（main.css 已按 .dark 切换），不依赖 light-dark()/color-scheme，兼容性更好 */
+  background: color-mix(in oklab, var(--bg) calc(var(--frost, 0) * 100%), transparent);
 }
 
 .slot-container {

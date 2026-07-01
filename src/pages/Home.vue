@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
       <!-- 上行：向左滚；整体下移，顶部被截、底部圆角露出 -->
       <div class="absolute inset-x-0 top-1/2 flex -translate-y-full flex-col pb-4">
-        <Marquee :duration="'45s'" :repeat="4" gap="0.5rem" class="w-full opacity-70 [--gap:0.5rem]">
+        <Marquee :duration="'45s'" :repeat="4" gap="0.5rem" class="w-full p-0 opacity-70 [--gap:0.5rem]">
           <div
             v-for="(file, i) in heroRowTop"
             :key="'t' + i"
@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
       </div>
       <!-- 下行：向右滚（reverse）；居中溢出（现状） -->
       <div class="absolute inset-x-0 top-1/2 flex translate-y-4 flex-col">
-        <Marquee :duration="'45s'" :repeat="4" reverse gap="0.5rem" class="w-full opacity-70 [--gap:0.5rem]">
+        <Marquee :duration="'45s'" :repeat="4" reverse gap="0.5rem" class="w-full p-0 opacity-70 [--gap:0.5rem]">
           <div
             v-for="(file, i) in heroRowBottom"
             :key="'b' + i"

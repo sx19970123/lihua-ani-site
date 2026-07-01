@@ -39,7 +39,7 @@ function scrollToDownload() {
   <header class="fixed inset-x-0 top-0 z-50">
     <!-- 液态玻璃容器：承担 backdrop-filter 折射 + 边缘高光 + 深度阴影 -->
     <LiquidGlass
-      container-class="relative block w-full border-b border-[var(--border)]/60"
+      container-class="relative block w-full"
       :radius="0"
       :frost="0.4"
     >
