@@ -46,6 +46,9 @@ const dimensions = reactive({
   height: 0,
 })
 
+// Chromium 内核才用 SVG 折射（backdrop-filter: url()），其余（Safari/Firefox/移动端）降级为高斯模糊
+const isChromium = ref(false)
+
 let observer: ResizeObserver | null = null
 
 const baseStyle = computed(() => {
@@ -98,6 +101,10 @@ const displacementDataUri = computed(() => {
 onMounted(() => {
   if (!liquidGlassRoot.value) return
 
+  // UA 检测：仅 Chromium 系（Chrome/Edge/Brave/Opera 等）用 SVG 折射。
+  // 关键：纯 Safari/Firefox 的 UA 不含 "Chrome/"，而所有 Chromium 系都含。
+  isChromium.value = /Chrome\//.test(navigator.userAgent)
+
   observer = new ResizeObserver((entries) => {
     const entry = entries[0]
     if (!entry) return
@@ -126,12 +133,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="liquidGlassRoot" :style="baseStyle" :class="cn(`effect`, props.containerClass)">
+  <div
+    ref="liquidGlassRoot"
+    :style="baseStyle"
+    :class="cn(`effect`, isChromium ? 'effect-glass' : 'effect-fallback', props.containerClass)"
+  >
     <div :class="cn(`slot-container`, props.class)">
       <slot />
     </div>
 
-    <svg class="filter" xmlns="http://www.w3.org/2000/svg">
+    <!-- 仅 Chromium 系渲染 SVG 折射 filter；其余内核不渲染，降级为高斯模糊 -->
+    <svg v-if="isChromium" class="filter" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="displacementFilter" color-interpolation-filters="sRGB">
           <feImage
@@ -202,9 +214,19 @@ onUnmounted(() => {
   display: block;
   opacity: 1;
   border-radius: inherit;
-  backdrop-filter: url(#displacementFilter);
   /* 用项目主题色变量（main.css 已按 .dark 切换），不依赖 light-dark()/color-scheme，兼容性更好 */
   background: color-mix(in oklab, var(--bg) calc(var(--frost, 0) * 100%), transparent);
+}
+
+/* Chromium 系：液态玻璃折射（SVG displacement filter） */
+.effect-glass {
+  backdrop-filter: url(#displacementFilter);
+}
+
+/* 非 Chromium（Safari/Firefox/移动端）：降级为高斯模糊 + 饱和 */
+.effect-fallback {
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
 }
 
 .slot-container {

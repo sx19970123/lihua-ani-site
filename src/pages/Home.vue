@@ -123,9 +123,6 @@ onBeforeUnmount(() => {
       class="pointer-events-none absolute inset-0"
       style="background: radial-gradient(ellipse 70% 60% at center, color-mix(in oklab, var(--bg) 55%, transparent) 0%, color-mix(in oklab, var(--bg) 92%, transparent) 100%)"
     />
-    <!-- 上下渐隐，让跑马灯边缘融入 -->
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--bg)] to-transparent" />
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[var(--bg)] to-transparent" />
 
     <!-- 前景：标题 + 下载 -->
     <div class="container-page relative z-10 flex w-full flex-col items-center text-center">
