@@ -86,13 +86,13 @@ onBeforeUnmount(() => {
           <div
             v-for="(file, i) in heroRowTop"
             :key="'t' + i"
-            class="relative aspect-[9/19.5] h-[60vh] shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80"
+            class="relative aspect-[9/19.5] max-h-[70vh] w-auto shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80 bg-[var(--bg-soft)]"
+            style="height: min(60vh, 480px)"
           >
             <img
               :src="shotPath(file)"
               alt=""
               class="size-full object-cover"
-              loading="lazy"
               @error="(e: Event) => ((e.target as HTMLImageElement).style.opacity = '0')"
             />
           </div>
@@ -104,13 +104,13 @@ onBeforeUnmount(() => {
           <div
             v-for="(file, i) in heroRowBottom"
             :key="'b' + i"
-            class="relative aspect-[9/19.5] h-[60vh] shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80"
+            class="relative aspect-[9/19.5] max-h-[70vh] w-auto shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80 bg-[var(--bg-soft)]"
+            style="height: min(60vh, 480px)"
           >
             <img
               :src="shotPath(file)"
               alt=""
               class="size-full object-cover"
-              loading="lazy"
               @error="(e: Event) => ((e.target as HTMLImageElement).style.opacity = '0')"
             />
           </div>
@@ -123,6 +123,9 @@ onBeforeUnmount(() => {
       class="pointer-events-none absolute inset-0"
       style="background: radial-gradient(ellipse 70% 60% at center, color-mix(in oklab, var(--bg) 55%, transparent) 0%, color-mix(in oklab, var(--bg) 92%, transparent) 100%)"
     />
+    <!-- 上下渐隐：用页面底色 var(--bg)（亮色白/暗色深灰，自动随主题切换） -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--bg)] to-transparent" />
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--bg)] to-transparent" />
 
     <!-- 前景：标题 + 下载 -->
     <div class="container-page relative z-10 flex w-full flex-col items-center text-center">
