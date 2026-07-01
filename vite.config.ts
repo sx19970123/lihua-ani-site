@@ -5,8 +5,8 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // GitHub Pages 子路径部署。若改用 username.github.io 根仓库，改为 '/'
-  base: '/lihua-ani-site/',
+  // 自定义域名部署到根路径
+  base: '/',
   plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
