@@ -1,0 +1,142 @@
+@import 'tailwindcss';
+
+/* Tailwind v4：用 class 策略的暗色模式（配合 index.html 的 FOUC 脚本） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 灵感来自 Inspira UI 的全局动效曲线 */
+@theme {
+  --font-sans:
+    'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* 品牌色：琥珀橙（取自 app） */
+  --color-brand-50: #fdf6ec;
+  --color-brand-100: #f9e6cc;
+  --color-brand-200: #f4d4a8;
+  --color-brand-300: #f0c285;
+  --color-brand-400: #f2b35f;
+  --color-brand-500: #f2b35f;
+  --color-brand-600: #c9954c;
+  --color-brand-700: #a87a3a;
+
+  /* 暖中性（app 背景色体系） */
+  --color-cream: #f7f7f8;
+  --color-cream-deep: #f2f2f5;
+  --color-ink: #242628;
+
+  --radius-4xl: 2rem;
+
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-meteor: meteor 5s linear infinite;
+  --animate-ripple: ripple var(--duration, 3400ms) ease calc(var(--i, 0) * 0.2s) infinite;
+  --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
+  --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap, 1rem))); }
+}
+
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap, 1rem))); }
+}
+
+@keyframes shimmer {
+  from { background-position: 0 0; }
+  to { background-position: -200% 0; }
+}
+
+@keyframes meteor {
+  0% { transform: rotate(var(--angle)) translateX(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% {
+    transform: rotate(var(--angle)) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(0.9); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg); }
+  100% { transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg); }
+}
+
+@keyframes border-beam {
+  100% { offset-distance: 100%; }
+}
+
+/* 全局基础样式 */
+@layer base {
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f7f8;
+    --fg: #242628;
+    --fg-muted: #6b7280;
+    --border: #ececf0;
+  }
+
+  .dark {
+    --bg: #242628;
+    --bg-soft: #2c2e31;
+    --fg: #f5f5f7;
+    --fg-muted: #9ca3af;
+    --border: #35373b;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+  }
+
+  /* 滚动条 */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-brand-400); }
+}
+
+@layer utilities {
+  /* 渐变文字 */
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-brand-400) 0%, var(--color-brand-600) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* 玻璃拟态 */
+  .glass {
+    background: color-mix(in oklab, var(--bg) 70%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+  }
+
+  /* 内容容器 */
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .container-page { padding-inline: 2rem; }
+  }
+}

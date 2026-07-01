@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/images/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="狸花番研部 —— 发现下一部想看的番，AI 越用越懂你的口味。" />
+    <title>狸花番研部</title>
+    <script>
+      // 暗色模式 FOUC 防护：首屏渲染前根据 localStorage 应用主题，避免刷新闪烁
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('theme') || 'auto'
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var isDark = stored === 'dark' || (stored === 'auto' && systemDark)
+          document.documentElement.classList.toggle('dark', isDark)
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
