@@ -56,7 +56,7 @@ const rootStyle = {
       }"
       :class="
         cn(
-          `flex shrink-0 justify-start gap-(--gap)`,
+          `flex w-max shrink-0 justify-start gap-(--gap)`,
           vertical ? 'animate-marquee-vertical flex-col' : 'animate-marquee flex-row',
           pauseOnHover ? 'group-hover:[animation-play-state:paused]' : '',
         )

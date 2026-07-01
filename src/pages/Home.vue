@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- ============ Hero（跑马灯背景 + 蒙版 + 标题 + 下载） ============ -->
-  <section id="top" class="relative grid min-h-[calc(100vh-4rem)] place-items-center overflow-hidden">
+  <section id="top" class="hero-section relative grid place-items-center overflow-hidden">
     <!-- 背景跑马灯：两行手机截图，反向滚动；上下溢出由 section 隐藏 -->
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
       <!-- 上行：向左滚；整体下移，顶部被截、底部圆角露出 -->
@@ -86,8 +86,7 @@ onBeforeUnmount(() => {
           <div
             v-for="(file, i) in heroRowTop"
             :key="'t' + i"
-            class="relative aspect-[9/19.5] max-h-[70vh] w-auto shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80 bg-[var(--bg-soft)]"
-            style="height: min(60vh, 480px)"
+            class="hero-shot relative aspect-[9/19.5] shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80 bg-[var(--bg-soft)]"
           >
             <img
               :src="shotPath(file)"
@@ -104,8 +103,7 @@ onBeforeUnmount(() => {
           <div
             v-for="(file, i) in heroRowBottom"
             :key="'b' + i"
-            class="relative aspect-[9/19.5] max-h-[70vh] w-auto shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80 bg-[var(--bg-soft)]"
-            style="height: min(60vh, 480px)"
+            class="hero-shot relative aspect-[9/19.5] shrink-0 overflow-hidden rounded-3xl border-2 border-brand-600/80 bg-[var(--bg-soft)]"
           >
             <img
               :src="shotPath(file)"
@@ -124,8 +122,12 @@ onBeforeUnmount(() => {
       class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_center,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.92)_100%)] dark:bg-[radial-gradient(ellipse_70%_60%_at_center,rgba(36,38,40,0.55)_0%,rgba(36,38,40,0.92)_100%)]"
     />
     <!-- 上下渐隐：显式亮/暗颜色 -->
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white to-transparent dark:from-[#242628]" />
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent dark:from-[#242628]" />
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(to_bottom,rgba(255,255,255,1)_0%,rgba(255,255,255,0)_100%)] dark:bg-[linear-gradient(to_bottom,rgba(36,38,40,1)_0%,rgba(36,38,40,0)_100%)] sm:h-28"
+    />
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(to_top,rgba(255,255,255,1)_0%,rgba(255,255,255,0)_100%)] dark:bg-[linear-gradient(to_top,rgba(36,38,40,1)_0%,rgba(36,38,40,0)_100%)] sm:h-28"
+    />
 
     <!-- 前景：标题 + 下载 -->
     <div class="container-page relative z-10 flex w-full flex-col items-center text-center">
@@ -282,3 +284,36 @@ onBeforeUnmount(() => {
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero-section {
+  min-height: calc(100vh - 4rem);
+}
+
+.hero-shot {
+  height: clamp(18rem, 48vh, 25rem);
+  width: clamp(8.31rem, 22.15vh, 11.54rem);
+}
+
+@supports (height: 100svh) {
+  .hero-section {
+    min-height: calc(100svh - 4rem);
+  }
+
+  .hero-shot {
+    height: clamp(18rem, 48svh, 25rem);
+    width: clamp(8.31rem, 22.15svh, 11.54rem);
+  }
+}
+
+@media (min-width: 640px) {
+  .hero-section {
+    min-height: calc(100vh - 4rem);
+  }
+
+  .hero-shot {
+    height: min(60vh, 480px);
+    width: min(27.69vh, 221.54px);
+  }
+}
+</style>
