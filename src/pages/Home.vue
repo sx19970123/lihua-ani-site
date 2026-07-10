@@ -8,12 +8,24 @@ import CardSpotlight from '@/components/inspira/CardSpotlight.vue'
 import ShimmerButton from '@/components/inspira/ShimmerButton.vue'
 import AnimatedGradientText from '@/components/inspira/AnimatedGradientText.vue'
 import { useModal } from '@/composables/useModal'
+import { useAppVersion } from '@/composables/useAppVersion'
 import { siteConfig } from '@/config/site.config'
 
 const router = useRouter()
 const { open } = useModal()
 
-const { version, updateDate, heroImages, features, download } = siteConfig
+const { heroImages, features } = siteConfig
+
+// 下载区数据：由 app 版本接口驱动，失败回退 siteConfig
+const {
+  loading: versionLoading,
+  androidUrl,
+  androidEnabled,
+  iosUrl,
+  iosEnabled,
+  versionLabel,
+  updateLabel,
+} = useAppVersion()
 
 // Hero 背景两行跑马灯：自动均分，反向滚动
 const half = Math.ceil(heroImages.length / 2)
@@ -22,16 +34,6 @@ const heroRowBottom = heroImages.slice(half)
 
 // 截图公共路径前缀
 const shotPath = (file: string) => `${import.meta.env.BASE_URL}images/screenshots/${file}`
-
-// 安卓 APK 下载链接（指向 public/downloads/）
-const apkUrl = computed(() => `${import.meta.env.BASE_URL}downloads/${download.apkFileName}`)
-const apkEnabled = computed(() => !!download.apkFileName)
-
-// iOS App Store 跳转链接
-const iosUrl = computed(() =>
-  download.iosAppStoreId ? `https://apps.apple.com/app/id${download.iosAppStoreId}` : '',
-)
-const iosEnabled = computed(() => !!download.iosAppStoreId)
 
 function scrollToDownload() {
   document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })
@@ -235,16 +237,17 @@ onBeforeUnmount(() => {
           @click="open('changelog')"
         >
           <History :size="13" />
-          {{ version }} · {{ updateDate }}
+          {{ versionLabel }} · {{ updateLabel }}
         </button>
 
         <!-- 双下载按钮 -->
         <div class="mt-8 flex w-full flex-col justify-center gap-3 sm:flex-row sm:gap-4">
             <!-- 安卓 -->
             <a
-              v-if="apkEnabled"
-              :href="apkUrl"
-              download
+              v-if="androidEnabled"
+              :href="androidUrl"
+              target="_blank"
+              rel="noopener"
               class="flex w-full items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white shadow-[0_4px_20px_-2px_rgba(242,179,95,0.5)] [background:linear-gradient(135deg,#f2b35f,#c9954c)] transition-transform active:translate-y-px sm:w-64"
             >
               <Smartphone :size="18" class="mr-2" />
@@ -254,10 +257,10 @@ onBeforeUnmount(() => {
               v-else
               disabled
               class="flex w-full cursor-not-allowed items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg-soft)] px-8 py-3.5 text-base font-semibold text-[var(--fg-muted)] opacity-70 sm:w-64"
-              title="Android 版即将上线"
+              :title="versionLoading ? '加载中…' : 'Android 版即将上线'"
             >
               <Smartphone :size="18" class="mr-2" />
-              Android 版 · 即将上线
+              {{ versionLoading ? '加载中…' : 'Android 版 · 即将上线' }}
             </button>
             <!-- iOS -->
             <a
@@ -274,10 +277,10 @@ onBeforeUnmount(() => {
               v-else
               disabled
               class="flex w-full cursor-not-allowed items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg-soft)] px-8 py-3.5 text-base font-semibold text-[var(--fg-muted)] opacity-70 sm:w-64"
-              title="iOS 版即将上线"
+              :title="versionLoading ? '加载中…' : 'iOS 版即将上线'"
             >
               <Apple :size="18" class="mr-2" />
-              iOS 版 · 即将上线
+              {{ versionLoading ? '加载中…' : 'iOS 版 · 即将上线' }}
             </button>
           </div>
       </CardSpotlight>

@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import Modal from './Modal.vue'
-import { siteConfig } from '@/config/site.config'
+import { useAppVersion } from '@/composables/useAppVersion'
 
 defineProps<{ modelValue: boolean }>()
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
 
-const changelog = siteConfig.changelog
+// 更新日志：以 app 版本接口为准，失败回退 siteConfig
+const { loading, changelog } = useAppVersion()
 </script>
 
 <template>
   <Modal :model-value="modelValue" title="更新日志" max-width="max-w-lg" @update:model-value="emit('update:modelValue', $event)">
     <div class="space-y-5">
+      <div
+        v-if="loading"
+        class="rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-5 text-center text-sm text-[var(--fg-muted)]"
+      >
+        加载中…
+      </div>
       <div
         v-for="(log, i) in changelog"
         :key="i"
