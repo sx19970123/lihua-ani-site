@@ -132,7 +132,7 @@ export const siteConfig: SiteConfig = {
   // ===== 捐赠 =====
   donate: {
     // 二维码放 public/images/donate/；留空则显示占位
-    wechatQr: '',
-    alipayQr: '',
+    wechatQr: 'wx.jpg',
+    alipayQr: 'zfb.jpg',
   },
 }
