@@ -218,7 +218,7 @@ onBeforeUnmount(() => {
       <!-- 标题 -->
       <div class="mx-auto mb-14 max-w-2xl text-center">
         <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">功能演示</h2>
-        <p class="mt-4 text-[var(--fg-muted)]">一分钟带你了解狸花番研部的核心玩法</p>
+        <p class="mt-4 text-[var(--fg-muted)]">三分钟带你了解狸花番研部的核心玩法</p>
       </div>
 
       <!-- B 站视频：响应式 16:9，居中限宽 -->
