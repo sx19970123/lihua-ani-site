@@ -33,6 +33,16 @@ function scrollToDownload() {
     document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })
   }
 }
+
+function scrollToVideo() {
+  if (router.currentRoute.value.path !== '/') {
+    router.push('/').then(() => {
+      setTimeout(() => document.getElementById('video')?.scrollIntoView({ behavior: 'smooth' }), 100)
+    })
+  } else {
+    document.getElementById('video')?.scrollIntoView({ behavior: 'smooth' })
+  }
+}
 </script>
 
 <template>
@@ -60,6 +70,12 @@ function scrollToDownload() {
             @click="scrollToFeatures"
           >
             功能介绍
+          </button>
+          <button
+            class="rounded-full px-4 py-2 text-sm font-medium text-[var(--fg-muted)] transition-colors hover:text-brand-500"
+            @click="scrollToVideo"
+          >
+            演示
           </button>
           <button
             class="rounded-full px-4 py-2 text-sm font-medium text-[var(--fg-muted)] transition-colors hover:text-brand-500"

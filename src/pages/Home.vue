@@ -212,6 +212,34 @@ onBeforeUnmount(() => {
     </div>
   </section>
 
+  <!-- ============ 功能演示（B 站视频） ============ -->
+  <section id="video" class="py-20 md:py-28">
+    <div class="container-page">
+      <!-- 标题 -->
+      <div class="mx-auto mb-14 max-w-2xl text-center">
+        <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">功能演示</h2>
+        <p class="mt-4 text-[var(--fg-muted)]">一分钟带你了解狸花番研部的核心玩法</p>
+      </div>
+
+      <!-- B 站视频：响应式 16:9，居中限宽 -->
+      <div
+        class="relative mx-auto aspect-video w-full max-w-4xl overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--bg-soft)] shadow-2xl"
+      >
+        <iframe
+          src="//player.bilibili.com/player.html?isOutside=true&aid=116924193249337&bvid=BV1JxNz64ERn&cid=39980499384&p=1"
+          title="狸花番研部功能演示"
+          scrolling="no"
+          border="0"
+          frameborder="no"
+          framespacing="0"
+          allowfullscreen="true"
+          loading="lazy"
+          class="absolute inset-0 size-full"
+        />
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 下载 ============ -->
   <section id="download" class="pt-20 pb-32 md:pt-28 md:pb-40">
     <div class="container-page">
